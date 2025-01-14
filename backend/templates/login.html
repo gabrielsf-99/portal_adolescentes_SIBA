@@ -1,16 +1,24 @@
 {% extends "base.html" %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Login - Portal dos Adolescentes{% endblock %}
 
 {% block content %}
-<div class="login-container">
-    <h2>Login</h2>
-    <form method="POST" action="/login">
-        <label for="username">Usuário:</label>
-        <input type="text" id="username" name="username" required>
-        <label for="password">Senha:</label>
-        <input type="password" id="password" name="password" required>
-        <button type="submit">Entrar</button>
-    </form>
+<div class="login-page">
+    <div class="login-container">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo do Portal" class="logo">
+        <h2>Login</h2>
+        <form method="POST" action="/login">
+            <label for="username">Usuário:</label>
+            <input type="text" id="username" name="username" placeholder="Digite seu usuário" required>
+            
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
+            
+            <button type="submit">Entrar</button>
+        </form>
+        {% if error %}
+        <p class="error-message">{{ error }}</p>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}

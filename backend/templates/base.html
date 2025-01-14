@@ -7,9 +7,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+    {% if show_header is not defined or show_header %}
     <header>
         <h1>Portal dos Adolescentes</h1>
     </header>
+    {% endif %}
     <main>
         {% block content %}{% endblock %}
     </main>
