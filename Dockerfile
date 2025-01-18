@@ -7,8 +7,8 @@ RUN apt-get update && apt-get install -y \
     libsqlite3-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Configurar o diretório de trabalho
-WORKDIR /app
+# Configurar o diretório de trabalho para o backend
+WORKDIR /app/backend
 
 # Copiar os arquivos necessários
 COPY requirements.txt requirements.txt
