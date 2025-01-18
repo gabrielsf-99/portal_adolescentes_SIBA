@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+from plano_leitura import plano
 
 app = Flask(__name__)
 
@@ -22,9 +23,30 @@ def login():
     
     return render_template('login.html', show_header=False)
 
-@app.route('/dashboard/<user>')
-def dashboard(user):
-    return f"<h1>Bem-vindo, {user}!</h1><p>Esta é a sua página inicial.</p>"
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html', show_title=False)
+
+@app.route('/devocional')
+def devocional():
+    # Conteúdo fictício do devocional
+    devocional_do_dia = {
+        "titulo": "Confie no Senhor",
+        "versiculo": "Provérbios 3:5-6",
+        "texto": (
+            "Confie no Senhor de todo o seu coração e não se apoie "
+            "em seu próprio entendimento. Reconheça o Senhor em todos os seus caminhos, "
+            "e ele endireitará as suas veredas."
+        ),
+        "data": "14 de Janeiro de 2025"
+    }
+    return render_template('devocional.html', devocional=devocional_do_dia)
+
+
+@app.route('/plano_leitura')
+def plano_leitura():
+    return render_template('plano_leitura.html', plano=plano, show_title=False)
+
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

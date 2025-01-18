@@ -1,24 +1,29 @@
-{% extends "base.html" %}
-
-{% block title %}Login - Portal dos Adolescentes{% endblock %}
-
-{% block content %}
-<div class="login-page">
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Portal dos Adolescentes</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body class="login-page">
     <div class="login-container">
-        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo do Portal" class="logo">
+        <img src="static/logo.png" alt="Logo do Portal" class="logo">
         <h2>Login</h2>
         <form method="POST" action="/login">
-            <label for="username">Usuário:</label>
-            <input type="text" id="username" name="username" placeholder="Digite seu usuário" required>
-            
-            <label for="password">Senha:</label>
-            <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
-            
-            <button type="submit">Entrar</button>
+            <div class="form-group">
+                <label for="username">Usuário</label>
+                <input type="text" id="username" name="username" placeholder="Digite seu usuário" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
+            </div>
+            <button type="submit" class="btn">Entrar</button>
         </form>
-        {% if error %}
-        <p class="error-message">{{ error }}</p>
-        {% endif %}
+        <div class="register-link">
+            <p>Não tem uma conta? <a href="#">Cadastre-se</a></p>
+        </div>
     </div>
-</div>
-{% endblock %}
+</body>
+</html>

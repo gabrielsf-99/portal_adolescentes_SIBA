@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Devocional - Portal dos Adolescentes{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <div class="devocional-container">
+        <h1>Devocional do Dia</h1>
+        <blockquote>
+            <p><strong>Versículo:</strong> {{ versiculo }}</p>
+            <p>{{ texto }}</p>
+        </blockquote>
+        <p><em>Data: {{ data }}</em></p>
+    </div>
+</div>
+{% endblock %}

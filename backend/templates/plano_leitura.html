@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Plano de Leitura{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <h1>Plano de Leitura - 6 Meses</h1>
+    <!-- Barra de progresso geral -->
+    <div class="progress-bar">
+        <label>Progresso Geral</label>
+        <div class="progress" id="progress-bar-geral" style="width: 0%;"></div>
+    </div>
+
+    <!-- Carrossel de meses -->
+    <div class="carrossel-container">
+        <button class="seta-esquerda" onclick="mudarMes(-1)">&#8249;</button>
+        <div class="meses-container" id="meses-container">
+            {% for mes, dias in plano.meses.items() %}
+            <div class="mes" id="mes-{{ loop.index }}" {% if not loop.first %}style="display: none;"{% endif %}>
+                <h2>{{ mes }}</h2>
+                <ul>
+                    {% for dia in dias %}
+                    <li>
+                        <input type="checkbox" id="dia-{{ mes }}-{{ dia.dia }}" data-mes="{{ loop.index }}" class="checkbox">
+                        <label for="dia-{{ mes }}-{{ dia.dia }}">Dia {{ dia.dia }}: {{ dia.capitulos }}</label>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+        <button class="seta-direita" onclick="mudarMes(1)">&#8250;</button>
+    </div>
+</div>
+
+<!-- Script para navegação e progresso -->
+<script>
+    let mesAtual = 1;
+    const totalMeses = {{ plano.meses|length }};
+    const barraGeral = document.getElementById('progress-bar-geral');
+    const checkboxes = document.querySelectorAll('.checkbox');
+
+    function mudarMes(direcao) {
+        // Ocultar o mês atual
+        document.getElementById(`mes-${mesAtual}`).style.display = 'none';
+        mesAtual += direcao;
+
+        // Garante que o índice do mês seja circular
+        if (mesAtual < 1) mesAtual = totalMeses;
+        if (mesAtual > totalMeses) mesAtual = 1;
+
+        // Mostra o novo mês
+        document.getElementById(`mes-${mesAtual}`).style.display = 'block';
+    }
+
+    // Atualiza a largura da barra de progresso
+    function atualizarProgresso() {
+        const totalCheckboxes = checkboxes.length;
+        const checkedCheckboxes = document.querySelectorAll('.checkbox:checked').length;
+        const progresso = (checkedCheckboxes / totalCheckboxes) * 100;
+        barraGeral.style.width = `${progresso}%`;
+    }
+
+    // Inicializa o progresso e adiciona listeners aos checkboxes
+    document.addEventListener('DOMContentLoaded', function () {
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', atualizarProgresso);
+        });
+
+        atualizarProgresso();
+    });
+</script>
+{% endblock %}
