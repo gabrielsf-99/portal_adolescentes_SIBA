@@ -2,9 +2,15 @@
 
 {% block title %}Dashboard - Portal dos Adolescentes{% endblock %}
 
+{% block styles %}
+<!-- Incluindo os estilos globais e específicos do dashboard -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
 {% block content %}
 <div class="dashboard">
-    <h1>Bem-vindo ao Portal dos Adolescentes</h1>
+    <h1>Bem-vindo {{ user_name }} ao Portal dos Adolescentes</h1>
 
     <!-- Seção 1 -->
     <div class="section">

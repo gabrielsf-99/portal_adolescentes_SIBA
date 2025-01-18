@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Portal{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Estilos Globais -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    <!-- Estilos Específicos da Página -->
+    {% block styles %}{% endblock %}
 </head>
 <body>
     {% if show_title is not defined or show_title %}

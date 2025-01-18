@@ -1,0 +1,110 @@
+/* Centralizar o título */
+.page-container h1 {
+    text-align: center; /* Centraliza o título */
+    color: var(--primary-color); /* Define a cor principal */
+    margin-bottom: 20px; /* Espaçamento inferior */
+}
+
+.carrossel-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.seta-esquerda, .seta-direita {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.seta-esquerda:hover, .seta-direita:hover {
+    background: var(--secondary-color);
+}
+
+.meses-container {
+    width: calc(100% - 100px);
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.mes {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--secondary-color);
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.mes h2 {
+    text-align: center;
+    color: var(--highlight-color);
+    margin-bottom: 10px;
+}
+
+.mes ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mes li {
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+}
+
+.mes li label {
+    margin-left: 10px;
+}
+
+.progress-bar {
+    width: 100%;
+    background: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px 0;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+/* Progresso */
+.progress {
+    background: var(--primary-color);
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease;
+    position: absolute;
+    z-index: 1; /* Fica abaixo da label */
+}
+
+/* Label da barra de progresso */
+.progress-bar label {
+    position: relative;
+    z-index: 2; /* Fica acima do progresso */
+    width: 100%;
+    text-align: center; /* Centraliza o texto da label */
+    color: #333; /* Cor escura para contraste */
+    font-weight: bold;
+    font-size: 14px;
+    pointer-events: none; /* Evita interferência com cliques */
+}

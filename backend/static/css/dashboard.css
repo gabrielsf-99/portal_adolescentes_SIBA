@@ -1,0 +1,43 @@
+/* dashboard.css */
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.dashboard h1 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.dashboard .section {
+    background: var(--secondary-color);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 10px 0;
+    max-width: 600px;
+    width: 100%;
+}
+
+.dashboard .section h2 {
+    color: var(--highlight-color);
+}
+
+.dashboard .section .button {
+    display: inline-block;
+    background: var(--highlight-color);
+    color: black;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.dashboard .section .button:hover {
+    background: var(--accent-color);
+    color: white;
+}

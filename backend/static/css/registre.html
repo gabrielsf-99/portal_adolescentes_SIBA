@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Cadastro - Portal dos Adolescentes{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="register-page">
+    <div class="register-container">
+        <h2>Cadastro</h2>
+        <form method="POST" action="/register">
+            <input type="text" name="nome" placeholder="Nome Completo" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="senha" placeholder="Senha" required>
+            <input type="text" name="endereco" placeholder="Endereço">
+            <input type="text" name="telefone" placeholder="Telefone">
+            <button type="submit">Cadastrar</button>
+        </form>
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

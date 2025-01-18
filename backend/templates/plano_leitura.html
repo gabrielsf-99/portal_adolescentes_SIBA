@@ -2,12 +2,18 @@
 
 {% block title %}Plano de Leitura{% endblock %}
 
+{% block styles %}
+<!-- Incluindo os estilos globais e específicos do dashboard -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/plano_leitura.css') }}">
+{% endblock %}
+
 {% block content %}
 <div class="page-container">
     <h1>Plano de Leitura - 6 Meses</h1>
     <!-- Barra de progresso geral -->
     <div class="progress-bar">
-        <label>Progresso Geral</label>
+        <label id="progress-label">Progresso Geral</label>
         <div class="progress" id="progress-bar-geral" style="width: 0%;"></div>
     </div>
 
@@ -21,7 +27,13 @@
                 <ul>
                     {% for dia in dias %}
                     <li>
-                        <input type="checkbox" id="dia-{{ mes }}-{{ dia.dia }}" data-mes="{{ loop.index }}" class="checkbox">
+                        <input 
+                            type="checkbox" 
+                            id="dia-{{ mes }}-{{ dia.dia }}" 
+                            data-dia="{{ dia.dia }}" 
+                            data-mes="{{ loop.index }}" 
+                            class="checkbox"
+                            {% if progresso.get((loop.index, dia.dia)) %}checked{% endif %}>
                         <label for="dia-{{ mes }}-{{ dia.dia }}">Dia {{ dia.dia }}: {{ dia.capitulos }}</label>
                     </li>
                     {% endfor %}
@@ -68,6 +80,33 @@
         });
 
         atualizarProgresso();
+    });
+</script>
+<script>
+    // Seleciona todos os checkboxes
+    document.querySelectorAll('.checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', event => {
+            // Captura os dados do checkbox alterado
+            const dia = event.target.dataset.dia;
+            const mes = event.target.dataset.mes;
+            const concluido = event.target.checked;
+
+            // Envia os dados para a rota "/update_progress" via POST
+            fetch('/update_progress', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `dia=${dia}&mes=${mes}&concluido=${concluido}`
+            })
+            .then(response => response.text()) // Converte a resposta para texto
+            .then(data => {
+                console.log('Progresso atualizado:', data); // Exibe o resultado no console
+            })
+            .catch(error => {
+                console.error('Erro ao atualizar progresso:', error); // Exibe erros no console
+            });
+        });
     });
 </script>
 {% endblock %}

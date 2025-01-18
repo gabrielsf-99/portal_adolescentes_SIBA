@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Painel de Gestão - Resumo do Grupo{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <h1>Painel de Gestão - Resumo do Grupo</h1>
+
+    <!-- Gráfico do Progresso Geral -->
+    <div class="grafico-container">
+        <h2>Progresso Geral</h2>
+        <canvas id="graficoGeral" width="400" height="200"></canvas>
+    </div>
+
+    <!-- Gráfico do Progresso Pessoal -->
+    <div class="grafico-container">
+        <h2>Progresso Pessoal</h2>
+        <canvas id="graficoPessoal" width="400" height="200"></canvas>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Gráfico do progresso geral
+    const progressoGeral = {{ progresso_geral }};
+    const ctxGeral = document.getElementById('graficoGeral').getContext('2d');
+    new Chart(ctxGeral, {
+        type: 'doughnut',
+        data: {
+            labels: ['Concluído', 'Restante'],
+            datasets: [{
+                data: [progressoGeral, 100 - progressoGeral],
+                backgroundColor: ['rgba(0, 128, 128, 0.7)', 'rgba(200, 200, 200, 0.7)'],
+                borderColor: ['rgba(0, 128, 128, 1)', 'rgba(200, 200, 200, 1)'],
+                borderWidth: 1
+            }]
+        }
+    });
+
+    // Gráfico do progresso pessoal
+    const progressoPorMes = {{ progresso_por_mes | safe }};
+    const usuarios = {{ usuarios | safe }};
+    const meses = Object.keys(progressoPorMes);
+    const datasets = meses.map(mes => ({
+        label: `Mês ${mes}`,
+        data: usuarios.map(usuario => progressoPorMes[mes][usuario] || 0),
+        backgroundColor: `rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255}, 0.7)`,
+        borderColor: `rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255}, 1)`,
+        borderWidth: 1
+    }));
+
+    const ctxPessoal = document.getElementById('graficoPessoal').getContext('2d');
+    new Chart(ctxPessoal, {
+        type: 'bar',
+        data: {
+            labels: usuarios,
+            datasets: datasets
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top'
+                }
+            }
+        }
+    });
+</script>
+
+<style>
+    .grafico-container {
+        margin: 20px auto;
+        max-width: 600px;
+        text-align: center;
+    }
+
+    canvas {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+{% endblock %}
